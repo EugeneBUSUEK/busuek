@@ -1,5 +1,7 @@
 package com.example.busuek.domain
 
+import androidx.lifecycle.LiveData
+
 interface MoviesRepository {
 
     fun addMovie(movie: Movie)
@@ -10,5 +12,5 @@ interface MoviesRepository {
 
     fun getMovie(movieId: Int): Movie
 
-    fun getMovieList(): List<Movie>
+    fun getMovieList(): LiveData<List<Movie>>
 }
