@@ -86,11 +86,11 @@ class MovieViewModel : ViewModel() {
         return result
     }
 
-    public fun resetErrorInputName() {
+    fun resetErrorInputName() {
         _errorInputName.value = false
     }
 
-    public fun resetErrorInputCount() {
+    fun resetErrorInputCount() {
         _errorInputCount.value = false
     }
 
