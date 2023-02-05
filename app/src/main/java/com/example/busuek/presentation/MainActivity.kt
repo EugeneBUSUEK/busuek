@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var movieListAdapter: MovieListAdapter
 
-    private var count = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,11 +22,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.movieList.observe(this) {
             movieListAdapter.submitList(it)
         }
-        val buttonAddMovie = findViewById<FloatingActionButton>(R.id.button_add_shop_item)
-        buttonAddMovie.setOnClickListener {
-            val intent = MovieActivity.newIntentAddMovie(this)
-            startActivity(intent)
-        }
+//        val buttonAddMovie = findViewById<FloatingActionButton>(R.id.button_add_shop_item)
+//        buttonAddMovie.setOnClickListener {
+//            val intent = MovieActivity.newIntentAddMovie(this)
+//            startActivity(intent)
+//        }
     }
 
     private fun setupRecyclerView() {

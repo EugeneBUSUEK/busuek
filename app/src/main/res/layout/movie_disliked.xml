@@ -19,6 +19,13 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
