@@ -23,7 +23,7 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint"
+            android:hint="name"
             android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,7 +34,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/save_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_name">
@@ -43,17 +43,8 @@
             android:id="@+id/et_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="count_hint"
+            android:hint="description"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="save_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

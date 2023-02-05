@@ -11,6 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Busuek"
         tools:targetApi="31">
+        <activity android:name=".presentation.MovieActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true">

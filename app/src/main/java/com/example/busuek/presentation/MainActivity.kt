@@ -1,20 +1,19 @@
 package com.example.busuek.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busuek.R
-import com.example.busuek.domain.Movie
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var movieListAdapter: MovieListAdapter
 
-    private var count = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,6 +22,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.movieList.observe(this) {
             movieListAdapter.submitList(it)
         }
+//        val buttonAddMovie = findViewById<FloatingActionButton>(R.id.button_add_shop_item)
+//        buttonAddMovie.setOnClickListener {
+//            val intent = MovieActivity.newIntentAddMovie(this)
+//            startActivity(intent)
+//        }
     }
 
     private fun setupRecyclerView() {
@@ -69,6 +73,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupClickListener() {
         movieListAdapter.onMovieClickListener = {
             Log.d("MainActivity", it.toString())
+            val intent = MovieActivity.newIntentEditMovie(this, it.id)
+            startActivity(intent)
         }
     }
 
