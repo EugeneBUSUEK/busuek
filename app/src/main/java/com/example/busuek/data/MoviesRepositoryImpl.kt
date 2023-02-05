@@ -16,7 +16,7 @@ object MoviesRepositoryImpl: MoviesRepository {
 
     init {
         for (i in 0 until 100) {
-            val movie = Movie("Name $i",
+            val movie = Movie("Movie $i",
                 "",
                 "",
                 "",
