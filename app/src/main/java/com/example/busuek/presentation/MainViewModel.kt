@@ -17,21 +17,14 @@ class MainViewModel: ViewModel() {
     private val deleteMovieUseCase = DeleteMovieUseCase(repository)
     private val editMovieUseCase = EditMovieUseCase(repository)
 
-    val movieList = MutableLiveData<List<Movie>>()
-
-    fun getMovieList() {
-        val list = getMovieListUseCase.getMovieList()
-        movieList.value = list
-    }
+    val movieList = getMovieListUseCase.getMovieList()
 
     fun deleteMovie(movie: Movie) {
         deleteMovieUseCase.deleteMovie(movie)
-        getMovieList()
     }
 
     fun changeLikedState(movie: Movie) {
         val newMovie = movie.copy(liked = !movie.liked)
         editMovieUseCase.editMovie(newMovie)
-        getMovieList()
     }
 }

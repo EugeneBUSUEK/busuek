@@ -1,9 +1,13 @@
 package com.example.busuek.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.busuek.domain.Movie
 import com.example.busuek.domain.MoviesRepository
 
 object MoviesRepositoryImpl: MoviesRepository {
+
+    private val movieListLD = MutableLiveData<List<Movie>>()
 
     private val movieList = mutableListOf<Movie>()
 
@@ -28,15 +32,17 @@ object MoviesRepositoryImpl: MoviesRepository {
             autoIncrementId++
         }
         movieList.add(movie)
+        updateList()
     }
 
     override fun deleteMovie(movie: Movie) {
         movieList.remove(movie)
+        updateList()
     }
 
     override fun editMovie(movie: Movie) {
         val oldMovie = getMovie(movie.id)
-        movieList.remove(movie)
+        movieList.remove(oldMovie)
         addMovie(movie)
     }
 
@@ -46,7 +52,11 @@ object MoviesRepositoryImpl: MoviesRepository {
         } ?: throw RuntimeException("Movie with $movieId not found")
     }
 
-    override fun getMovieList(): List<Movie> {
-        return movieList.toList()
+    override fun getMovieList(): LiveData<List<Movie>> {
+        return movieListLD
+    }
+
+    private fun updateList() {
+        movieListLD.value = movieList.toList()
     }
 }
