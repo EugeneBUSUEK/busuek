@@ -2,7 +2,6 @@ package com.example.busuek.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busuek.R
@@ -10,7 +9,7 @@ import com.example.busuek.R
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var adapter: MovieListAdapter
+    private lateinit var movieListAdapter: MovieListAdapter
 
     private var count = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,13 +18,23 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.movieList.observe(this) {
-            adapter.moviesList = it
+            movieListAdapter.moviesList = it
         }
     }
 
     private fun setupRecyclerView() {
         val rvMoviesList = findViewById<RecyclerView>(R.id.rv_shop_list)
-        adapter = MovieListAdapter()
-        rvMoviesList.adapter = adapter
+        with(rvMoviesList) {
+            movieListAdapter = MovieListAdapter()
+            rvMoviesList.adapter = movieListAdapter
+            rvMoviesList.recycledViewPool.setMaxRecycledViews(
+                MovieListAdapter.VIEW_TYPE_DISLIKED,
+                MovieListAdapter.MAX_POOL_SIZE
+            )
+            rvMoviesList.recycledViewPool.setMaxRecycledViews(
+                MovieListAdapter.VIEW_TYPE_LIKED,
+                MovieListAdapter.MAX_POOL_SIZE
+            )
+        }
     }
 }

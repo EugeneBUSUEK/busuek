@@ -18,30 +18,23 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.movie_liked,
-            parent,
-            false
-        )
+        val layout = when (viewType) {
+            VIEW_TYPE_LIKED -> R.layout.movie_liked
+            VIEW_TYPE_DISLIKED -> R.layout.movie_disliked
+            else -> throw RuntimeException("Unknown view type: $viewType")
+        }
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return MovieViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: MovieViewHolder, position: Int) {
         val movie = moviesList[position]
-        val status = if (movie.liked) {
-            "Liked"
-        } else {
-            "Non"
-        }
-
         viewHolder.view.setOnLongClickListener {
             true
         }
-        if (movie.liked) {
-            viewHolder.tvName.text = "${movie.name} $status"
-            viewHolder.tvCount.text = movie.id.toString()
-            viewHolder.tvName.setTextColor(ContextCompat.getColor(viewHolder.view.context, android.R.color.holo_red_light))
-        }
+        viewHolder.tvName.text = movie.name
+        viewHolder.tvCount.text = movie.id.toString()
+
     }
 
     override fun onViewRecycled(viewHolder: MovieViewHolder) {
@@ -55,8 +48,24 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(
         return moviesList.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        val movie = moviesList[position]
+        return if (movie.liked) {
+            VIEW_TYPE_LIKED
+        } else {
+            VIEW_TYPE_DISLIKED
+        }
+    }
+
     class MovieViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvName = view.findViewById<TextView>(R.id.tv_name)
         val tvCount = view.findViewById<TextView>(R.id.tv_count)
+    }
+
+    companion object {
+        const val VIEW_TYPE_DISLIKED = 100
+        const val VIEW_TYPE_LIKED = 101
+
+        const val MAX_POOL_SIZE = 20
     }
 }
