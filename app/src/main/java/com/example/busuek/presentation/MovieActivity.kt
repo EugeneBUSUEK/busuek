@@ -32,9 +32,7 @@ class MovieActivity : AppCompatActivity() {
         parseIntent()
         viewModel = ViewModelProvider(this)[MovieViewModel::class.java]
         initViews()
-//        val mode = intent.getStringExtra(EXTRA_SCREEN_MODE)
-//        Log.d("MovieActivity", mode.toString())
-        addTextChangeListeners()
+//        addTextChangeListeners()
         launchRightMode()
         observeViewModel()
     }
@@ -66,34 +64,34 @@ class MovieActivity : AppCompatActivity() {
     private fun launchRightMode() {
         when (screenMode) {
             MODE_EDIT -> launchEditMode()
-            MODE_ADD -> launchEditMode()
+//            MODE_ADD -> launchAddMode()
         }
     }
 
-    private fun addTextChangeListeners() {
-        etName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                viewModel.resetErrorInputName()
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
-        etCount.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                viewModel.resetErrorInputCount()
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
-    }
+//    private fun addTextChangeListeners() {
+//        etName.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                viewModel.resetErrorInputName()
+//            }
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//            }
+//        })
+//        etCount.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                viewModel.resetErrorInputCount()
+//            }
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//            }
+//        })
+//    }
 
     private fun launchEditMode() {
         viewModel.getMovie(movieId)
@@ -101,16 +99,16 @@ class MovieActivity : AppCompatActivity() {
             etName.setText(it.name)
             etCount.setText(it.id.toString())
         }
-        buttonSave.setOnClickListener {
-            viewModel.editMovie(etName.text?.toString(), etCount.text?.toString())
-        }
+//        buttonSave.setOnClickListener {
+//            viewModel.editMovie(etName.text?.toString(), etCount.text?.toString())
+//        }
     }
 
-    private fun launchAddMode() {
-        buttonSave.setOnClickListener {
-            viewModel.addMovie(etName.text?.toString(), etCount.text?.toString())
-        }
-    }
+//    private fun launchAddMode() {
+//        buttonSave.setOnClickListener {
+//            viewModel.addMovie(etName.text?.toString(), etCount.text?.toString())
+//        }
+//    }
 
     private fun parseIntent() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE)) {
@@ -134,7 +132,7 @@ class MovieActivity : AppCompatActivity() {
         tilCount = findViewById(R.id.til_count)
         etName = findViewById(R.id.et_name)
         etCount = findViewById(R.id.et_count)
-        buttonSave = findViewById(R.id.save_button)
+//        buttonSave = findViewById(R.id.save_button)
     }
 
     companion object {
