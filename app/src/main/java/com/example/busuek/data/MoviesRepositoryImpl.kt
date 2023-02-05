@@ -10,7 +10,7 @@ object MoviesRepositoryImpl: MoviesRepository {
 
     private val movieListLD = MutableLiveData<List<Movie>>()
 
-    private val movieList = mutableListOf<Movie>()
+    private val movieList = sortedSetOf<Movie>({o1, o2 -> o1.id.compareTo(o2.id)})
 
     private var autoIncrementId = 0
 
