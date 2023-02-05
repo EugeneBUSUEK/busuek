@@ -17,6 +17,9 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(
             notifyDataSetChanged()
         }
 
+    var onMovieLongClickListener: ((Movie) -> Unit)? = null
+    var onMovieClickListener: ((Movie) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layout = when (viewType) {
             VIEW_TYPE_LIKED -> R.layout.movie_liked
@@ -30,7 +33,11 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(
     override fun onBindViewHolder(viewHolder: MovieViewHolder, position: Int) {
         val movie = moviesList[position]
         viewHolder.view.setOnLongClickListener {
+            onMovieLongClickListener?.invoke(movie)
             true
+        }
+        viewHolder.view.setOnClickListener {
+            onMovieClickListener?.invoke(movie)
         }
         viewHolder.tvName.text = movie.name
         viewHolder.tvCount.text = movie.id.toString()
@@ -60,6 +67,11 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(
     class MovieViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvName = view.findViewById<TextView>(R.id.tv_name)
         val tvCount = view.findViewById<TextView>(R.id.tv_count)
+    }
+
+    interface OnMovieLongClickListener {
+
+        fun onMovieLongClick(movie: Movie)
     }
 
     companion object {

@@ -2,9 +2,12 @@ package com.example.busuek.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busuek.R
+import com.example.busuek.domain.Movie
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +38,43 @@ class MainActivity : AppCompatActivity() {
                 MovieListAdapter.VIEW_TYPE_LIKED,
                 MovieListAdapter.MAX_POOL_SIZE
             )
+        }
+        setupLongClickListener()
+        setupClickListener()
+        setupSwipeListener(rvMoviesList)
+    }
+
+    private fun setupSwipeListener(rvMoviesList: RecyclerView) {
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val movie = movieListAdapter.moviesList[viewHolder.adapterPosition]
+                viewModel.deleteMovie(movie)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(rvMoviesList)
+    }
+
+    private fun setupClickListener() {
+        movieListAdapter.onMovieClickListener = {
+            Log.d("MainActivity", it.toString())
+        }
+    }
+
+    private fun setupLongClickListener() {
+        movieListAdapter.onMovieLongClickListener = {
+            viewModel.changeLikedState(it)
         }
     }
 }
