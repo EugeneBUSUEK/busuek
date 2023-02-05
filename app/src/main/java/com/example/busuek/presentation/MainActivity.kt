@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.movieList.observe(this) {
-            movieListAdapter.moviesList = it
+            movieListAdapter.submitList(it)
         }
     }
 
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val movie = movieListAdapter.moviesList[viewHolder.adapterPosition]
+                val movie = movieListAdapter.currentList[viewHolder.adapterPosition]
                 viewModel.deleteMovie(movie)
             }
         }

@@ -1,21 +1,12 @@
 package com.example.busuek.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.example.busuek.R
 import com.example.busuek.domain.Movie
 
-class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
-
-    var moviesList = listOf<Movie>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class MovieListAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
 
     var onMovieLongClickListener: ((Movie) -> Unit)? = null
     var onMovieClickListener: ((Movie) -> Unit)? = null
@@ -31,7 +22,7 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(
     }
 
     override fun onBindViewHolder(viewHolder: MovieViewHolder, position: Int) {
-        val movie = moviesList[position]
+        val movie = getItem(position)
         viewHolder.view.setOnLongClickListener {
             onMovieLongClickListener?.invoke(movie)
             true
@@ -44,34 +35,13 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>(
 
     }
 
-    override fun onViewRecycled(viewHolder: MovieViewHolder) {
-        super.onViewRecycled(viewHolder)
-        viewHolder.tvName.text = ""
-        viewHolder.tvCount.text = ""
-        viewHolder.tvName.setTextColor(ContextCompat.getColor(viewHolder.view.context, android.R.color.white))
-    }
-
-    override fun getItemCount(): Int {
-        return moviesList.size
-    }
-
     override fun getItemViewType(position: Int): Int {
-        val movie = moviesList[position]
+        val movie = getItem(position)
         return if (movie.liked) {
             VIEW_TYPE_LIKED
         } else {
             VIEW_TYPE_DISLIKED
         }
-    }
-
-    class MovieViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val tvName = view.findViewById<TextView>(R.id.tv_name)
-        val tvCount = view.findViewById<TextView>(R.id.tv_count)
-    }
-
-    interface OnMovieLongClickListener {
-
-        fun onMovieLongClick(movie: Movie)
     }
 
     companion object {
