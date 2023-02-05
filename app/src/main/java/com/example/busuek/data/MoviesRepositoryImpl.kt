@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.busuek.domain.Movie
 import com.example.busuek.domain.MoviesRepository
+import kotlin.random.Random
 
 object MoviesRepositoryImpl: MoviesRepository {
 
@@ -14,14 +15,15 @@ object MoviesRepositoryImpl: MoviesRepository {
     private var autoIncrementId = 0
 
     init {
-        for (i in 0 until 10) {
+        for (i in 0 until 100) {
             val movie = Movie("Name $i",
                 "",
                 "",
                 "",
                 "",
                 "",
-                false)
+                Random.nextBoolean()
+            )
             addMovie(movie)
         }
     }
