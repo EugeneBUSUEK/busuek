@@ -8,9 +8,9 @@ data class Movie(
     val genre: String,
     val country: String,
     val liked: Boolean,
-    var id: Int = -UNDEFIND_ID
+    var id: Int = UNDEFINED_ID
 ) {
     companion object {
-        const val UNDEFIND_ID = -1
+        const val UNDEFINED_ID = -1
     }
 }

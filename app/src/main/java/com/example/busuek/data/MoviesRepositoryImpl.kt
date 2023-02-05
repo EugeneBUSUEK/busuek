@@ -9,9 +9,23 @@ object MoviesRepositoryImpl: MoviesRepository {
 
     private var autoIncrementId = 0
 
+    init {
+        for (i in 0 until 10) {
+            val movie = Movie("Name $i",
+                "",
+                "",
+                "",
+                "",
+                "",
+                false)
+            addMovie(movie)
+        }
+    }
+
     override fun addMovie(movie: Movie) {
-        if (movie.id == Movie.UNDEFIND_ID) {
-            movie.id = autoIncrementId++
+        if (movie.id == Movie.UNDEFINED_ID) {
+            movie.id = autoIncrementId
+            autoIncrementId++
         }
         movieList.add(movie)
     }
